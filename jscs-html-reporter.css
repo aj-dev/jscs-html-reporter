@@ -1,84 +1,84 @@
 body {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #wrapper {
-	max-width: 1350px;
-	min-width: 800px;
-	margin: 20px auto;
-	background-color: #FEFEFE;
+    max-width: 1350px;
+    min-width: 800px;
+    margin: 20px auto;
+    background-color: #FEFEFE;
 }
 
 header {
-	background-color: rgb(102, 158, 4);
-	padding: 5px;
-	margin-bottom: 10px;
-	border: 0;
-	border-radius: 5px;
-	font-family: monospace;
-	font-size: 20px;
+    background-color: rgb(102, 158, 4);
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 0;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 20px;
 }
 
 header.error {
-	background-color: #DDDDDD;
+    background-color: #DDDDDD;
 }
 
 .errors {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	float: left;
-	width: 100%;
-	overflow-x: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float: left;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .errors .error {
-	width: 100%;
-	padding: 8px;
-	margin-bottom: 5px;
-	font-family: monospace;
-	white-space: pre;
-	clear: both;
-	border: 1px solid #DDDDDD;
-	border-radius: 5px;
-	word-wrap: break-word;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 5px;
+    font-family: monospace;
+    white-space: pre;
+    clear: both;
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+    word-wrap: break-word;
 }
 
 .errors .error:nth-child(odd) {
-	background-color: #FAA9A9;
+    background-color: #FAA9A9;
 }
 
 .errors .error:nth-child(even) {
-	background-color: #FC8C8C;
+    background-color: #FC8C8C;
 }
 
 .errors .error:hover {
-	border-color: #666666;
+    border-color: #666666;
 }
 
 .error .errorMessage {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 .error .errorHeader {
-	cursor: pointer;
-	width: inherit;
-	display: inline-block;
+    cursor: pointer;
+    width: inherit;
+    display: inline-block;
 }
 
 .error .file, .error .file a {
-	color: #666666;
+    color: #666666;
 }
 
 .error .file a:hover {
-	color: #000000;
+    color: #000000;
 }
 
 .errors .errorNumber {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 .hide {
-	display: none;
+    display: none;
 }

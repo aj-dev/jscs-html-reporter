@@ -1,4 +1,9 @@
 # jscs-html-reporter
+[![Build Status](https://travis-ci.org/aj-dev/jscs-html-reporter.svg?branch=master)](https://travis-ci.org/aj-dev/jscs-html-reporter)
+[![Dependencies](https://david-dm.org/aj-dev/jscs-html-reporter.svg)](https://david-dm.org/aj-dev/jscs-html-reporter#info=dependencies&view=table)
+[![DevDependencies](https://david-dm.org/aj-dev/jscs-html-reporter/dev-status.svg)](https://david-dm.org/aj-dev/jscs-html-reporter/dev-status#info=dependencies&view=table)
+
+
 An HTML reporter for [node-jscs](https://github.com/mdevils/node-jscs) and [grunt-jscs](https://github.com/jscs-dev/grunt-jscs).
 
 ## Getting started
@@ -28,3 +33,6 @@ jscs: {
 
 ## Example
 Coming soon...
+
+## License
+Licensed under the MIT license. Copyright (c) 2015 Audrius Jakumavicius

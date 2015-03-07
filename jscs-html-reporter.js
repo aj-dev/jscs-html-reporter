@@ -73,7 +73,7 @@ module.exports = function (errorsCollection) {
             '<span class="errorNumber">' + errorCount + '.</span>',
             error.message + ' - ',
             '<span class="file">',
-            '<a href="../../../' + errors.getFilename() + '" target="_blank">' + errors.getFilename() + '</a>',
+            '<a href="../../../' + path.resolve(process.cwd(), errors.getFilename()) + '" target="_blank">' + errors.getFilename() + '</a>',
             ' (line:' + error.line + ', column:' + (error.column + 1) + ')',
             '</span>',
             '</span>',

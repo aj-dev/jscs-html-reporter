@@ -1,0 +1,25 @@
+{
+    "name": "jscs-html-reporter",
+    "version": "0.0.1",
+    "description": "A jscs reporter which outputs results to HTML file for viewing in browser",
+    "main": "jscs-html-reporter.js",
+    "author": "Audrius Jakumavicius",
+    "license": "MIT",
+    "keywords": [
+        "html",
+        "jscs",
+        "reporter",
+        "grunt",
+        "jscs-html",
+        "html-reporter",
+        "jscs-html-reporter"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/aj-dev/jscs-html-reporter"
+    },
+    "bugs": {
+        "url": "https://github.com/aj-dev/jscs-html-reporter/issues"
+    },
+    "dependencies": {}
+}

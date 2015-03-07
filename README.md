@@ -1,4 +1,4 @@
-# jscs-html-reporter
+# jscs-html-reporter [![npmVersion](http://img.shields.io/npm/v/jscs-html-reporter.svg)](https://www.npmjs.org/package/jscs-html-reporter)
 [![Build Status](https://travis-ci.org/aj-dev/jscs-html-reporter.svg?branch=master)](https://travis-ci.org/aj-dev/jscs-html-reporter)
 [![Dependencies](https://david-dm.org/aj-dev/jscs-html-reporter.svg)](https://david-dm.org/aj-dev/jscs-html-reporter#info=dependencies&view=table)
 [![DevDependencies](https://david-dm.org/aj-dev/jscs-html-reporter/dev-status.svg)](https://david-dm.org/aj-dev/jscs-html-reporter#info=devDependencies&view=table)

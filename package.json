@@ -21,6 +21,6 @@
     "bugs": {
         "url": "https://github.com/aj-dev/jscs-html-reporter/issues"
     },
-    "devDependencies": {}
+    "devDependencies": {},
     "dependencies": {}
 }

@@ -53,23 +53,23 @@ header.error {
     border-color: #666666;
 }
 
-.error .errorMessage {
+.error .error-message {
     margin-top: 10px;
 }
 
-.error .errorHeader {
+.error .error-header {
     cursor: pointer;
 }
 
-.error .file, .error .file a {
-    color: #666666;
-}
-
-.error .file a:hover {
+.error .file {
     color: #000000;
 }
 
-.errors .errorNumber {
+.error .file .error-location {
+    color: #666666;
+}
+
+.errors .error-number {
     margin-right: 10px;
 }
 

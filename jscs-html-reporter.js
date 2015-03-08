@@ -69,15 +69,16 @@ module.exports = function (errorsCollection) {
     function createListElement(error, errors, errorCount) {
         errorsHtml += [
             '<li class="error">',
-            '<span class="errorHeader">',
-            '<span class="errorNumber">' + errorCount + '.</span>',
+            '<span class="error-header">',
+            '<span class="error-number">' + errorCount + '.</span>',
             error.message + ' - ',
             '<span class="file">',
-            '<a href="../../../' + path.resolve(process.cwd(), errors.getFilename()) + '" target="_blank">' + errors.getFilename() + '</a>',
+            '<a href="' + path.resolve(process.cwd(), errors.getFilename()) + '" target="_blank">' + errors.getFilename() + '</a>',
             ' (line:' + error.line + ', column:' + (error.column + 1) + ')',
             '</span>',
             '</span>',
-            '<div class="errorMessage hide">' + encodeHtml(errors.explainError(error)) + '</div></li>'
+            '<div class="error-message hide">' + encodeHtml(errors.explainError(error)) + '</div>',
+            '</li>'
         ].join('');
     }
 

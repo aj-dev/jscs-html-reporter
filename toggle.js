@@ -29,7 +29,7 @@
         var parentElement = getParentElement(eventTarget);
 
         if (parentElement) {
-            return parentElement.querySelector('.errorMessage');
+            return parentElement.querySelector('.error-message');
         }
     }
 
@@ -52,7 +52,7 @@
         errorsContainer.addEventListener('click', function (event) {
             event.stopPropagation();
 
-            if (event.target.localName !== 'a') {
+            if (event.target.className === 'error-header' || event.target.parentElement.className === 'error-header') {
                 toggleView(event.target);
             }
         }, false);

@@ -16,17 +16,22 @@ Install using npm:
 #### When using with [node-jscs](https://github.com/mdevils/node-jscs)
 Set the path to `jscs-html-reporter`. Command line example:
 
-`jscs . --reporter jscs-html-reporter.js`
+`jscs . --reporter node_modules/jscs-html-reporter/jscs-html-reporter.js`
+
+Report will be written to `jscs-html-report.html` in current working directory.
 
 #### When using with [grunt-jscs](https://github.com/jscs-dev/grunt-jscs)
 Configure `jscs` in `Gruntfile.js` so that `reporter` points to `jscs-html-reporter.js` and `reporterOutput` points to some HTML file.
 
 ```javascript
 jscs: {
-    src: 'path/to/files/*.js',
+    src: [
+    	'path/to/files/*.js',
+    	'another/path/to/files/**/*.js'
+    ],
     options: {
         reporter: '/path/to/jscs-html-reporter.js',
-        reporterOutput: '/path/to/reporter-output.html'
+        reporterOutput: '/path/to/jscs-html-report.html'
     }
 }
 ```

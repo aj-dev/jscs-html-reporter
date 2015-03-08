@@ -61,8 +61,16 @@ header.error {
     cursor: pointer;
 }
 
-.error .file {
+.error .file, .error .file a {
     color: #000000;
+}
+
+.error .file a {
+    text-decoration: none;
+}
+
+.error .file a:hover {
+    color: #666666;
 }
 
 .error .file .error-location {

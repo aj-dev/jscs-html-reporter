@@ -16,3 +16,4 @@
 sftp-config.json
 
 *.travis.yml
+*.png

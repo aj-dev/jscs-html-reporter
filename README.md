@@ -32,7 +32,7 @@ jscs: {
 ```
 
 ## Example
-Coming soon...
+![alt text](https://raw.githubusercontent.com/aj-dev/jscs-html-reporter/master/jscs-html-reporter.png 'JSCS HTML Reporter output')
 
 ## License
 Licensed under the MIT license. Copyright (c) 2015 Audrius Jakumavicius

@@ -59,6 +59,7 @@ header.error {
 
 .error .error-header {
     cursor: pointer;
+    padding: 8px 0;
 }
 
 .error .file, .error .file a {

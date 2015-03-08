@@ -1,6 +1,7 @@
 /* global process, require */
 
 var path = require('path');
+var fs = require('fs');
 
 /**
  * @param {Array} errorsCollection
@@ -9,7 +10,8 @@ module.exports = function (errorsCollection) {
 
     'use strict';
 
-    var config = this.options,
+    // For grunt-jscs we need `this.options`, for node-jscs - `this`
+    var config = this.options || this,
         reporterDirName,
         errorCount = 0,
         header = '',
@@ -116,11 +118,29 @@ module.exports = function (errorsCollection) {
      * @description Combines all HTML partials into one and outputs to console.
      */
     function combineAndOutputAllPartials() {
-        process.stdout.write([
-            header,
-            errorsHtml,
-            footer
-        ].join(''));
+        var outputPath,
+            data = [
+                header,
+                errorsHtml,
+                footer
+            ].join('');
+
+        if (isReporterOutputSet()) {
+            process.stdout.write(data);
+        } else {
+            outputPath = path.resolve(process.cwd(), 'jscs-html-report.html');
+            fs.writeFileSync(outputPath, data);
+            console.log('>> jscs report written to', outputPath);
+        }
+    }
+
+    /**
+     * @description Checks whether reporter output path is set in `config`.
+     * `reporterOutput` property can only be set using `grunt-jscs`.
+     * @returns {Boolean}
+     */
+    function isReporterOutputSet() {
+        return !!(config && config.reporterOutput);
     }
 
     /**
@@ -128,7 +148,13 @@ module.exports = function (errorsCollection) {
      * @returns {String|Error} Reporter's directory name or error if not found
      */
     function setReporterDirName() {
-        var dirName = path.dirname(path.relative(path.dirname(config.reporterOutput), config.reporter)).replace(/\\/g, '/');
+        var dirName;
+
+        if (isReporterOutputSet()) {
+            dirName = path.dirname(path.relative(path.dirname(config.reporterOutput), config.reporter)).replace(/\\/g, '/');
+        } else {
+            dirName = path.dirname(path.relative(process.cwd(), config.path || config.reporter)).replace(/\\/g, '/');
+        }
 
         if (!dirName) {
             return new Error('Could not resolve relative path to jscs-html-reporter');

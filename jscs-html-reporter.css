@@ -50,7 +50,7 @@ header.error {
 }
 
 .errors .error:hover {
-    border-color: #666666;
+    border-color: #888888;
 }
 
 .error .error-message {

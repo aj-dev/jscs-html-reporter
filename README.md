@@ -30,8 +30,9 @@ jscs: {
     	'another/path/to/files/**/*.js'
     ],
     options: {
-        reporter: '/path/to/jscs-html-reporter.js',
-        reporterOutput: '/path/to/jscs-html-report.html'
+        maxErrors: null,
+        reporter: require('jscs-html-reporter').path,
+        reporterOutput: path.resolve('/path/to/jscs-html-report.html')
     }
 }
 ```

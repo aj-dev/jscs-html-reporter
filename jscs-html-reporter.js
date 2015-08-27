@@ -36,7 +36,7 @@ module.exports = function (errorsCollection) {
         header += [
             '<!DOCTYPE html><html lang="en">',
             '<head><meta charset="UTF-8"><title>JSCS HTML Reporter</title>',
-            '<link href="' + reporterDirName + '/jscs-html-reporter.css" rel="stylesheet">',
+            '<link href="' + reporterDirName + '/jscs-html-reporter/jscs-html-reporter.css" rel="stylesheet">',
             '</head>',
             '<body>',
             '<div id="wrapper">'
@@ -108,7 +108,7 @@ module.exports = function (errorsCollection) {
     function createFooterPartial() {
         footer += [
             '</div>',
-            '<script type="text/javascript" src="' + reporterDirName + '/toggle.js"></script>',
+            '<script type="text/javascript" src="' + reporterDirName + '/jscs-html-reporter/toggle.js"></script>',
             '</body>',
             '</html>'
         ].join('');
@@ -165,3 +165,6 @@ module.exports = function (errorsCollection) {
 
     generateReport();
 };
+
+// Expose path to reporter so it can be configured in grunt-jscs task
+module.exports.path = __dirname;

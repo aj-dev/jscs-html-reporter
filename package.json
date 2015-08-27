@@ -1,6 +1,6 @@
 {
     "name": "jscs-html-reporter",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "A jscs reporter which writes to HTML file",
     "main": "jscs-html-reporter.js",
     "author": "Audrius Jakumavicius",

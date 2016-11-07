@@ -54,4 +54,4 @@ Report will be written to `jscs-html-report.html` in current working directory.
 ![alt text](https://raw.githubusercontent.com/aj-dev/jscs-html-reporter/master/jscs-html-reporter.png 'JSCS HTML Reporter output')
 
 ## License
-Licensed under the MIT license. Copyright (c) 2015 Audrius Jakumavicius
+Licensed under the MIT license. Copyright (c) 2015 - 2016 Audrius Jakumavicius

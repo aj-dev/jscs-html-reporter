@@ -11,7 +11,7 @@ module.exports = function (errorsCollection) {
     'use strict';
 
     // For grunt-jscs we need `this.options`, for node-jscs - `this`, for gulp-jscs - `{}`
-    var config = (this && this.options) || this || {},
+    var config = this ? (this.options || this) : {},
         reporterDirName,
         errorCount = 0,
         header = '',

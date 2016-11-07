@@ -4,7 +4,7 @@
 [![DevDependencies](https://david-dm.org/aj-dev/jscs-html-reporter/dev-status.svg)](https://david-dm.org/aj-dev/jscs-html-reporter#info=devDependencies&view=table) [![npm](https://img.shields.io/npm/dm/jscs-html-reporter.svg)](https://www.npmjs.com/package/jscs-html-reporter)
 
 
-An HTML reporter for [node-jscs](https://github.com/mdevils/node-jscs) and [grunt-jscs](https://github.com/jscs-dev/grunt-jscs).
+An HTML reporter for [node-jscs](https://github.com/mdevils/node-jscs), [grunt-jscs](https://github.com/jscs-dev/grunt-jscs) and [gulp-jscs](https://github.com/jscs-dev/gulp-jscs).
 
 ## Getting started
 Install using npm:
@@ -36,6 +36,19 @@ jscs: {
     }
 }
 ```
+#### When using with [gulp-jscs](https://github.com/jscs-dev/gulp-jscs)
+Set custom reporter:
+```javascript
+var gulp = require('gulp');
+var jscs = require('gulp-jscs');
+
+gulp.task('default', function () {
+    return gulp.src('src/app.js')
+               .pipe(jscs())
+               .pipe(jscs.reporter('jscs-html-reporter'));
+});
+```
+Report will be written to `jscs-html-report.html` in current working directory.
 
 ## Example
 ![alt text](https://raw.githubusercontent.com/aj-dev/jscs-html-reporter/master/jscs-html-reporter.png 'JSCS HTML Reporter output')

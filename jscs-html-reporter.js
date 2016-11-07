@@ -10,8 +10,8 @@ module.exports = function (errorsCollection) {
 
     'use strict';
 
-    // For grunt-jscs we need `this.options`, for node-jscs - `this`
-    var config = this.options || this,
+    // For grunt-jscs we need `this.options`, for node-jscs - `this`, for gulp-jscs - `{}`
+    var config = (this && this.options) || this || {},
         reporterDirName,
         errorCount = 0,
         header = '',
@@ -153,7 +153,7 @@ module.exports = function (errorsCollection) {
         if (isReporterOutputSet()) {
             dirName = path.dirname(path.relative(path.dirname(config.reporterOutput), config.reporter)).replace(/\\/g, '/');
         } else {
-            dirName = path.dirname(path.relative(process.cwd(), config.path || config.reporter)).replace(/\\/g, '/');
+            dirName = path.dirname(path.relative(process.cwd(), config.path || config.reporter || 'node_modules/jscs-html-reporter')).replace(/\\/g, '/');
         }
 
         if (!dirName) {

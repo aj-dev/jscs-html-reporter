@@ -5,14 +5,14 @@ body {
 
 #wrapper {
     max-width: 1350px;
-    min-width: 800px;
+    min-width: 400px;
     margin: 20px auto;
     background-color: #FEFEFE;
 }
 
 header {
     background-color: rgb(102, 158, 4);
-    padding: 5px;
+    padding: 8px;
     margin-bottom: 10px;
     border: 0;
     border-radius: 5px;
@@ -35,7 +35,6 @@ header.error {
     padding: 8px;
     margin-bottom: 5px;
     font-family: monospace;
-    white-space: pre;
     border: 1px solid #DDDDDD;
     border-radius: 5px;
     word-wrap: break-word;
@@ -55,11 +54,13 @@ header.error {
 
 .error .error-message {
     margin-top: 10px;
+    white-space: pre-wrap;
 }
 
 .error .error-header {
     cursor: pointer;
-    padding: 8px 0;
+    width: 100%;
+    display: inline-block;
 }
 
 .error .file, .error .file a {

@@ -2,169 +2,132 @@
 
 var path = require('path');
 var fs = require('fs');
+var through = require('through2');
+var handlebars = require('handlebars');
+
+handlebars.registerHelper('inc', function (value) {
+    return parseInt(value, 10) + 1;
+});
+
+var reporter = {
+    /**
+     * Returns reporter's output path or default file name relative to CWD
+     * @param {string} outputPath
+     * @returns {string}
+     */
+    getOutputPath: function (outputPath) {
+        return path.relative(process.cwd(), outputPath || 'jscs-html-report.html');
+    },
+
+    /**
+     * Returns relative path from output path to reporter
+     * @param {string} outputPath
+     * @returns {string}
+     */
+    getRelativePath: function (outputPath) {
+        return path.relative(path.dirname(outputPath), __dirname);
+    },
+
+    /**
+     * Returns transformed array of errors
+     * @param {Array} errors
+     * @param {boolean} isOutputPathSet
+     * @returns {Array}
+     */
+    processErrors: function (errors, isOutputPathSet) {
+        return errors.getErrorList().map(function (error) {
+            return {
+                message: error.message,
+                line: error.line,
+                column: error.column,
+                reason: errors.explainError(error),
+                fileName: path.relative(isOutputPathSet ? __dirname : process.cwd(), errors.getFilename()),
+            };
+        });
+    },
+
+    /**
+     * Compiles handlebars template
+     * @param {Object} context
+     * @returns {string}
+     */
+    compileTemplate: function (context) {
+        var template = fs.readFileSync(path.join(__dirname, 'template.hbs'), 'utf-8');
+
+        return handlebars.compile(template)(context);
+    },
+
+    /**
+     * Saves report to an output path
+     * @param {Object} data
+     * @param {string} outputPath
+     */
+    saveReport: function (data, outputPath) {
+        var html = this.compileTemplate(data);
+
+        fs.writeFileSync(outputPath, html);
+
+        console.log('*** JSCS report saved to %s\n', outputPath);
+    }
+};
 
 /**
- * @param {Array} errorsCollection
+ * JSCS Gulp reporter
+ * @param {Object} options
+ * @returns {*}
  */
-module.exports = function (errorsCollection) {
+function jscsGulpReporter(options) {
+    var options = options || {};
+    var outputPath = reporter.getOutputPath(options.reporterOutput);
+    var relativeReporterPath = reporter.getRelativePath(outputPath);
+    var failedFiles = null;
+    var errorsCollection;
 
-    'use strict';
+    return through.obj(function (file, enc, callback) {
+        if (file.jscs && !file.jscs.success) {
+            (failedFiles = failedFiles || []).push(file.path);
 
-    // For grunt-jscs we need `this.options`, for node-jscs - `this`, for gulp-jscs - `{}`
-    var config = this ? (this.options || this) : {},
-        reporterDirName,
-        errorCount = 0,
-        header = '',
-        errorsHtml = '',
-        footer = '';
+            errorsCollection = (errorsCollection || []).concat(reporter.processErrors(file.jscs.errors, Boolean(options.reporterOutput)));
+        }
 
-    /**
-     * @description Generates HTML report of style errors.
-     */
+        callback(null, file);
+    }, function (callback) {
+        if (failedFiles) {
+            reporter.saveReport({errorsCollection: errorsCollection, relativeReporterPath: relativeReporterPath}, outputPath);
+        }
+
+        callback();
+    });
+}
+
+/**
+ * JSCS Grunt reporter
+ * @param {Array} files
+ */
+function jscsReporter(files) {
+    // For grunt-jscs we need `this.options`, for node-jscs - `this`
+    var options = this.options || this;
+    var outputPath = reporter.getOutputPath(options.reporterOutput);
+    var relativeReporterPath = reporter.getRelativePath(outputPath);
+
     function generateReport() {
-        setReporterDirName();
-        createHeaderPartial();
-        generateErrorsList();
-        createFooterPartial();
-        combineAndOutputAllPartials();
-    }
+        var errorsCollection = [];
 
-    /**
-     * @description Creates header part of HTML page.
-     */
-    function createHeaderPartial() {
-        header += [
-            '<!DOCTYPE html><html lang="en">',
-            '<head><meta charset="UTF-8"><title>JSCS HTML Reporter</title>',
-            '<link href="' + reporterDirName + '/jscs-html-reporter/jscs-html-reporter.css" rel="stylesheet">',
-            '</head>',
-            '<body>',
-            '<div id="wrapper">'
-        ].join('');
-    }
-
-    /**
-     * @description Outputs errors from each error set.
-     */
-    function generateErrorsList() {
-        errorsHtml += '<ul class="errors">';
-
-        errorsCollection.forEach(function (errors) {
+        files.forEach(function (errors) {
             if (!errors.isEmpty()) {
-                errors.getErrorList().forEach(function (error) {
-                    errorCount++;
-                    createListElement(error, errors, errorCount);
-                });
+                errorsCollection = errorsCollection.concat(reporter.processErrors(errors, Boolean(options.reporterOutput)));
             }
         });
 
-        header += (errorCount ? '<header class="error">Total number of errors: ' + errorCount : '<h1>No errors found!') + '</header>';
-        errorsHtml += '</ul>';
-    }
-
-    /**
-     * @description Creates li element with error information.
-     * @param {Object} error Current error object
-     * @param {Array} errors A list of errors
-     * @param {Number} errorCount Error number
-     */
-    function createListElement(error, errors, errorCount) {
-        errorsHtml += [
-            '<li class="error">',
-            '<span class="error-header">',
-            '<span class="error-number">' + errorCount + '.</span>',
-            error.message + ' - ',
-            '<span class="file">',
-            '<a href="' + path.resolve(process.cwd(), errors.getFilename()) + '" target="_blank">' + errors.getFilename() + '</a>',
-            '<span class="error-location"> (line:' + error.line + ', column:' + (error.column + 1) + ')</span>',
-            '</span>',
-            '</span>',
-            '<div class="error-message hide">' + encodeHtml(errors.explainError(error)) + '</div>',
-            '</li>'
-        ].join('');
-    }
-
-    /**
-     * @description Encodes HTML characters in strings.
-     * @param {String} string
-     * @returns {String} Encoded string
-     */
-    function encodeHtml(string) {
-        var entitiesMap = {
-            '&': '&amp;',
-            '"': '&quot;',
-            '<': '&lt;',
-            '>': '&gt;'
-        };
-
-        return (string || '').replace(/(&|"|<|>)/g, function (entity) {
-            return entitiesMap[entity];
-        });
-    }
-
-    /**
-     * @description Creates footer part of HTML page.
-     */
-    function createFooterPartial() {
-        footer += [
-            '</div>',
-            '<script type="text/javascript" src="' + reporterDirName + '/jscs-html-reporter/toggle.js"></script>',
-            '</body>',
-            '</html>'
-        ].join('');
-    }
-
-    /**
-     * @description Combines all HTML partials into one and outputs to console.
-     */
-    function combineAndOutputAllPartials() {
-        var outputPath,
-            data = [
-                header,
-                errorsHtml,
-                footer
-            ].join('');
-
-        if (isReporterOutputSet()) {
-            process.stdout.write(data);
-        } else {
-            outputPath = path.resolve(process.cwd(), 'jscs-html-report.html');
-            fs.writeFileSync(outputPath, data);
-            console.log('>> jscs report written to', outputPath);
-        }
-    }
-
-    /**
-     * @description Checks whether reporter output path is set in `config`.
-     * `reporterOutput` property can only be set using `grunt-jscs`.
-     * @returns {Boolean}
-     */
-    function isReporterOutputSet() {
-        return !!(config && config.reporterOutput);
-    }
-
-    /**
-     * @description Returns jscs-html-reporter's directory name relative to report output directory.
-     * @returns {String|Error} Reporter's directory name or error if not found
-     */
-    function setReporterDirName() {
-        var dirName;
-
-        if (isReporterOutputSet()) {
-            dirName = path.dirname(path.relative(path.dirname(config.reporterOutput), config.reporter)).replace(/\\/g, '/');
-        } else {
-            dirName = path.dirname(path.relative(process.cwd(), config.path || config.reporter || 'node_modules/jscs-html-reporter')).replace(/\\/g, '/');
-        }
-
-        if (!dirName) {
-            return new Error('Could not resolve relative path to jscs-html-reporter');
-        }
-
-        reporterDirName = dirName;
+        reporter.saveReport({errorsCollection: errorsCollection, relativeReporterPath: relativeReporterPath}, outputPath);
     }
 
     generateReport();
-};
+}
+
+module.exports = jscsReporter;
 
 // Expose path to reporter so it can be configured in grunt-jscs task
 module.exports.path = __dirname;
+
+module.exports.gulpReporter = jscsGulpReporter;

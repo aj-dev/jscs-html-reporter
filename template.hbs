@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSCS HTML Reporter</title>
+    <link href="{{relativeReporterPath}}/jscs-html-reporter.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+    <header class="error">Total number of errors: {{errorsCollection.length}}</header>
+    <ul class="errors">
+        {{#each errorsCollection as |error|}}
+            <li class="error">
+                <span class="error-header">
+                    <span class="error-number">{{inc @index}}.</span>
+                    <span>{{error.message}} - </span>
+                    <span class="file">
+                        <a href="{{error.fileName}}" target="_blank">{{error.fileName}}</a>
+                        <span class="error-location"> (line: {{error.line}}, column: {{error.column}})</span>
+                    </span>
+                </span>
+                <pre class="error-message hide">{{error.reason}}</pre>
+            </li>
+        {{/each}}
+    </ul>
+</div>
+<script type="text/javascript" src="{{relativeReporterPath}}/toggle.js"></script>
+</body>
+</html>

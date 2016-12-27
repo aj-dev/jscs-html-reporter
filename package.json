@@ -13,6 +13,7 @@
         "jscs",
         "reporter",
         "grunt",
+        "gulp",
         "jscs-html",
         "html-reporter",
         "jscs-html-reporter"
@@ -24,6 +25,7 @@
     "files": [
         "jscs-html-reporter.js",
         "jscs-html-reporter.css",
+        "template.hbs",
         "toggle.js"
     ],
     "bugs": {

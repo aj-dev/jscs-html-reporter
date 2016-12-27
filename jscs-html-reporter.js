@@ -61,9 +61,16 @@ var reporter = {
      * Saves report to an output path
      * @param {Object} data
      * @param {string} outputPath
+     * @param {boolean} isGrunt
      */
-    saveReport: function (data, outputPath) {
+    saveReport: function (data, outputPath, isGrunt) {
         var html = this.compileTemplate(data);
+
+        if (isGrunt) {
+            process.stdout.write(html);
+
+            return;
+        }
 
         fs.writeFileSync(outputPath, html);
 
@@ -73,7 +80,7 @@ var reporter = {
 
 /**
  * JSCS Gulp reporter
- * @param {Object} options
+ * @param {Object} [options]
  * @returns {*}
  */
 function jscsGulpReporter(options) {
@@ -101,12 +108,13 @@ function jscsGulpReporter(options) {
 }
 
 /**
- * JSCS Grunt reporter
+ * JSCS reporter
  * @param {Array} files
  */
 function jscsReporter(files) {
     // For grunt-jscs we need `this.options`, for node-jscs - `this`
     var options = this.options || this;
+    var isGrunt = Boolean(this.options);
     var outputPath = reporter.getOutputPath(options.reporterOutput);
     var relativeReporterPath = reporter.getRelativePath(outputPath);
 
@@ -119,7 +127,7 @@ function jscsReporter(files) {
             }
         });
 
-        reporter.saveReport({errorsCollection: errorsCollection, relativeReporterPath: relativeReporterPath}, outputPath);
+        reporter.saveReport({errorsCollection: errorsCollection, relativeReporterPath: relativeReporterPath}, outputPath, isGrunt);
     }
 
     generateReport();

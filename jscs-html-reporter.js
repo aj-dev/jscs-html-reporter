@@ -61,7 +61,7 @@ var reporter = {
      * Saves report to an output path
      * @param {Object} data
      * @param {string} outputPath
-     * @param {boolean} isGrunt
+     * @param {boolean} [isGrunt]
      */
     saveReport: function (data, outputPath, isGrunt) {
         var html = this.compileTemplate(data);

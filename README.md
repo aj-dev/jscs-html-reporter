@@ -32,23 +32,25 @@ jscs: {
     options: {
         maxErrors: null,
         reporter: require('jscs-html-reporter').path,
-        reporterOutput: path.resolve('/path/to/jscs-html-report.html')
+        reporterOutput: '/path/to/jscs-html-report.html'
     }
 }
 ```
 #### When using with [gulp-jscs](https://github.com/jscs-dev/gulp-jscs)
-Set custom reporter:
+Pipe jscs files to the reporter and provide an optional output path and file name:
 ```javascript
 var gulp = require('gulp');
 var jscs = require('gulp-jscs');
+var jscsGulpHtmlReporter = require('jscs-html-reporter').gulpReporter;
 
 gulp.task('default', function () {
     return gulp.src('src/app.js')
                .pipe(jscs())
-               .pipe(jscs.reporter('jscs-html-reporter'));
+               .pipe(jscs.reporter())
+               .pipe(jscsGulpHtmlReporter({reporterOutput: 'output-path/jscs-html-report.html'}))
 });
 ```
-Report will be written to `jscs-html-report.html` in current working directory.
+Report will be written to `reporterOutput` if specified, otherwise to `jscs-html-report.html` in current working directory.
 
 ## Example
 ![alt text](https://raw.githubusercontent.com/aj-dev/jscs-html-reporter/master/jscs-html-reporter.png 'JSCS HTML Reporter output')

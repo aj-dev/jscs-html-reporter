@@ -21,7 +21,7 @@ Set the path to `jscs-html-reporter`. Command line example:
 Report will be written to `jscs-html-report.html` in current working directory.
 
 #### When using with [grunt-jscs](https://github.com/jscs-dev/grunt-jscs)
-Configure `jscs` in `Gruntfile.js` so that `reporter` points to `jscs-html-reporter.js` and `reporterOutput` points to some HTML file.
+Configure `jscs` in `Gruntfile.js` so that `reporter` points to `jscs-html-reporter.js` and `reporterOutput` points to some HTML file within the project.
 
 ```javascript
 jscs: {
@@ -37,7 +37,7 @@ jscs: {
 }
 ```
 #### When using with [gulp-jscs](https://github.com/jscs-dev/gulp-jscs)
-Pipe jscs files to the reporter and provide an optional output path and file name:
+Pipe jscs files to the reporter and provide an optional output path within the project:
 ```javascript
 var gulp = require('gulp');
 var jscs = require('gulp-jscs');
@@ -47,7 +47,7 @@ gulp.task('default', function () {
     return gulp.src('src/app.js')
                .pipe(jscs())
                .pipe(jscs.reporter())
-               .pipe(jscsGulpHtmlReporter({reporterOutput: 'output-path/jscs-html-report.html'}))
+               .pipe(jscsGulpHtmlReporter({reporterOutput: '/path/to/jscs-html-report.html'}))
 });
 ```
 Report will be written to `reporterOutput` if specified, otherwise to `jscs-html-report.html` in current working directory.

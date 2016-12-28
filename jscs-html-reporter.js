@@ -31,17 +31,17 @@ var reporter = {
     /**
      * Returns transformed array of errors
      * @param {Array} errors
-     * @param {boolean} isOutputPathSet
+     * @param {string} outputDir
      * @returns {Array}
      */
-    processErrors: function (errors, isOutputPathSet) {
+    processErrors: function (errors, outputDir) {
         return errors.getErrorList().map(function (error) {
             return {
                 message: error.message,
                 line: error.line,
                 column: error.column,
                 reason: errors.explainError(error),
-                fileName: path.relative(isOutputPathSet ? __dirname : process.cwd(), errors.getFilename()),
+                fileName: path.relative(outputDir, errors.getFilename())
             };
         });
     },
@@ -94,7 +94,7 @@ function jscsGulpReporter(options) {
         if (file.jscs && !file.jscs.success) {
             (failedFiles = failedFiles || []).push(file.path);
 
-            errorsCollection = (errorsCollection || []).concat(reporter.processErrors(file.jscs.errors, Boolean(options.reporterOutput)));
+            errorsCollection = (errorsCollection || []).concat(reporter.processErrors(file.jscs.errors, path.dirname(outputPath)));
         }
 
         callback(null, file);
@@ -118,12 +118,18 @@ function jscsReporter(files) {
     var outputPath = reporter.getOutputPath(options.reporterOutput);
     var relativeReporterPath = reporter.getRelativePath(outputPath);
 
+    if (isGrunt && !options.reporterOutput) {
+        console.error(new Error('JSCS HTML reporter `reporterOutput` path not specified in grunt task!\n'));
+
+        process.exit(1);
+    }
+
     function generateReport() {
         var errorsCollection = [];
 
         files.forEach(function (errors) {
             if (!errors.isEmpty()) {
-                errorsCollection = errorsCollection.concat(reporter.processErrors(errors, Boolean(options.reporterOutput)));
+                errorsCollection = errorsCollection.concat(reporter.processErrors(errors, path.dirname(outputPath)));
             }
         });
 

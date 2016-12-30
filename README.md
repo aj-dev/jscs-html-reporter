@@ -46,7 +46,6 @@ var jscsGulpHtmlReporter = require('jscs-html-reporter').gulpReporter;
 gulp.task('default', function () {
     return gulp.src('src/app.js')
                .pipe(jscs())
-               .pipe(jscs.reporter())
                .pipe(jscsGulpHtmlReporter({reporterOutput: '/path/to/jscs-html-report.html'}))
 });
 ```

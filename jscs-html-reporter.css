@@ -7,6 +7,7 @@ body {
     max-width: 1350px;
     min-width: 400px;
     margin: 20px auto;
+    padding: 0 10px;
     background-color: #FEFEFE;
 }
 
@@ -29,15 +30,15 @@ header.error {
     margin: 0;
     padding: 0;
     overflow-x: auto;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
 }
 
 .errors .error {
-    padding: 8px;
-    margin-bottom: 5px;
     font-family: monospace;
-    border: 1px solid #DDDDDD;
-    border-radius: 5px;
     word-wrap: break-word;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .errors .error:nth-child(odd) {
@@ -45,22 +46,25 @@ header.error {
 }
 
 .errors .error:nth-child(even) {
-    background-color: #FC8C8C;
-}
-
-.errors .error:hover {
-    border-color: #888888;
+    background-color: #FD9898;
 }
 
 .error .error-message {
-    margin-top: 10px;
+    margin: 0;
+    padding: 8px;
     white-space: pre-wrap;
+    background-color: #FFDACE;
 }
 
 .error .error-header {
     cursor: pointer;
     width: 100%;
     display: inline-block;
+    padding: 8px;
+}
+
+.error .error-header:hover {
+    background-color: #fdbfbf;
 }
 
 .error .file, .error .file a {

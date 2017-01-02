@@ -12,17 +12,21 @@ body {
 }
 
 header {
-    background-color: rgb(102, 158, 4);
+    background-color: #DDDDDD;
     padding: 8px;
     margin-bottom: 10px;
     border: 0;
     border-radius: 5px;
     font-family: monospace;
     font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-header.error {
-    background-color: #DDDDDD;
+header span {
+    display: inline-block;
+    font-size: 14px;
 }
 
 .errors {
@@ -31,8 +35,6 @@ header.error {
     padding: 0;
     overflow-x: auto;
     border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, .08);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
 }
 
 .errors .error {
@@ -85,6 +87,11 @@ header.error {
 
 .errors .error-number {
     margin-right: 10px;
+}
+
+.box-shadow {
+    border: 1px solid rgba(0, 0, 0, .08);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
 }
 
 .hide {

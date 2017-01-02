@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JSCS HTML Reporter</title>
+    <title>JSCS HTML Report</title>
     <link href="{{relativeReporterPath}}/jscs-html-reporter.css" rel="stylesheet">
 </head>
 <body>
 <div id="wrapper">
-    <header class="error">Total number of errors: {{errorsCollection.length}}</header>
-    <ul class="errors">
+    <header class="box-shadow">
+        Errors: {{errorsCollection.length}}
+        <span>JSCS HTML Reporter v{{htmlReporterVersion}}</span>
+    </header>
+    <ul class="errors box-shadow">
         {{#each errorsCollection as |error|}}
             <li class="error">
                 <span class="error-header">

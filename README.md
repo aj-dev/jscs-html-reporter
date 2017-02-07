@@ -55,4 +55,4 @@ Report will be written to `reporterOutput` if specified, otherwise to `jscs-html
 ![alt text](https://raw.githubusercontent.com/aj-dev/jscs-html-reporter/master/jscs-html-reporter.png 'JSCS HTML Reporter output')
 
 ## License
-Licensed under the MIT license. Copyright (c) 2015 - 2016 Audrius Jakumavicius
+Licensed under the MIT license. Copyright (c) 2015 - 2017 Audrius Jakumavicius
